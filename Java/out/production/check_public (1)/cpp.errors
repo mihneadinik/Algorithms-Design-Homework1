@@ -1,0 +1,24 @@
+./prinel.cpp:3:  Found C system header after C++ system header. Should be: prinel.h, c system, c++ system, other.  [build/include_order] [4]
+./prinel.cpp:12:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:39:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:66:  Line ends in whitespace.  Consider deleting these extra spaces.  [whitespace/end_of_line] [4]
+./prinel.cpp:70:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:76:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:83:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:84:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:115:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:116:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./prinel.cpp:139:  Could not find a newline character at the end of the file.  [whitespace/ending_newline] [5]
+Skipping input './out/production/check_public': Can't open for reading
+Skipping input '(1)/prinel.cpp': Can't open for reading
+Skipping input './out/production/check_public': Can't open for reading
+Skipping input '(1)/walsh.cpp': Can't open for reading
+Skipping input './out/production/check_public': Can't open for reading
+Skipping input '(1)/_utils/verif.cpp': Can't open for reading
+./walsh.cpp:43:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./walsh.cpp:62:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+./walsh.cpp:68:  Lines should be <= 80 characters long  [whitespace/line_length] [2]
+Done processing ./prinel.cpp
+Done processing ./walsh.cpp
+Done processing ./_utils/verif.cpp
+Total errors found: 14

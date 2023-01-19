@@ -1,0 +1,128 @@
+Dinica Mihnea-Gabriel 323CA
+
+-- Walsh --
+* in order to efficientize the overall performance of the code, I used
+shift operations to compute multiplications and divisions with powers of 2
+* for each query I recursively break the matrix in 4 areas, halving its
+dimensions, until I reach a 1 by 1 matrix, the base case in a divide and
+conquer approach
+* I keep count of how many times I go through the down-right area, where
+all the values are negated, and based on its parity I know that I got to
+a 1 or 0 value
+* the complexities for this exercise are: memory O(K) as I'm saving all
+the pairs of indices for queries (also, I could have solved each query
+as I was reading it saving this extra space) and time O(K * log N) as for
+each query I have logarithmic complexity for solving the matrix
+
+-- Statistics --
+* finding the greatest number of words that could be concatenated in such
+manner so a dominant letter exists among a set of words involved a greedy
+approach, trying to use each letter of the alphabet at a time
+* in order to efficientize this search I created a function that tells
+whether a letter is contained in any of the words read (containsLetter)
+so I don't waste resources trying to solve that case
+* the function numberApparitions tells how many times a certain letter
+appears inside a given word and it will be used when sorting the set of
+words by a convenient criteria; letterDifference gives this sorting
+convention: the difference between the number of apparitions of a letter
+in a words and all other different letters; it is better to compute this
+greedy criteria as a difference rather than a ratio as it tells exactly
+the impact a word has when it is concatenated with others: If for example
+I'm looking at 2 different words, the first one has 3 letters in total
+and none of them is the one I'm considering to be dominant and the second
+one has 7 letters and none of them is the dominant one, that their greedy
+sorting values are -3 and -7, instead of 0/3 and 0/7 which would have mean
+that they are as likely to be chosen, but the second one deffinetely has a
+much worse impact overall
+* for each letter of the alphabet I make a simulation where I keep adding
+words (they are already sorted for each step) while that certain letter
+remains dominant (it appears more than half the total length) and keep
+the maximum value computed
+* the complexities of this problem are: memory O(N * L) ~ O(N ^ 2) for the
+vector of words and time O(number_of_different_letters * N * L) ~ O(26 * N ^ 2)
+=> O(N ^ 2) as for each dominant letter I may go through all the words and for
+each word I go through all its letters
+
+-- Prinel --
+* I used 2 different dynamic programming aproaches to solve this problem:
+firstly I had to compute the number of operations neccessary for each
+target value to be reached from the starting value (1); to do this, I
+found the biggest of the targets and created a vector of steps needed
+to reach each of the values; initially, I considered the worst case when
+I'm only using the smallest divisor 1 to go from the base number to the
+target (so for a number x I need x - 1 steps 1->2->3->...->x) and then
+as I'm iterating through the vector I take each number's divisors (they
+have been computed efficiently, using memoization and only going from
+2 to sqrt(x) when trying to find them), add them to the current number
+and check whether this is a quicker way to reach that certain value than
+the previous one; for example, initially to reach number 6 I needed 5 steps,
+but when I am on number 3 with divisors 1 and 3, if I add the last divisor
+to the number itself it means that I can reach the 6 value in one step
+more than I needed to reach 3, that is exactly 3 total steps
+* secondly, to find the biggest number of points that can be made, I
+used an approach similar to 'knapsack 0-1' problem where I check for
+each of the target values whether it is more advantageous to consider
+it to the final result or not, based on the number of points it provides
+in contrast to the number of steps it needs to be computed; to efficientize
+this part I came up with 2 ideas: instead of using a matrix for this
+dynamic programming computations I only used 2 vectors, one for the current
+element that I'm considering and one for the previous one, highly reducing the
+use of memory and checking whether I have to compute all this dynamic
+approach or not, based on the number of totals steps neccessary to compute
+all target values and the total available steps
+* the complexities for this problem are a bit harder to see as I'm using
+more structures to solve it; for the memory part I use 2 N-sized vectors
+for the points and target values, a vector of transformation steps that
+could be O(target[i]) ~ O(10 ^ 5) in size, but the biggest would be
+the 2 vectors used to simulate the DP table that can go up to O(K) in size;
+for the time complexity I need O(K * N) steps to finish the DP approach
+
+-- Crypto --
+* I used a dynamic programming approach in order to solve the problem without
+using backtracking to generate all the possible keys that would have resulted
+into an inefficient time and space complexity; this [1] article from
+geeksforgeeks provided a starting point for the problem, but it had to be
+greatly improved to work with this certain exercise
+* I computed the number of different letters that appear in the substring as
+this would be the number of branches the key expands to for each '?' character;
+now it's easy to tell that the number of total branches the key will have is
+number_of_unique_letters ^ number_of_? (if we have l different letter for the
+first '?' in the key we will generate l branches, for the second one l * l
+branches and so on)
+* the DP table contains as rows the index of each letter in the key and as
+coloumns the index of each letter in the substring (indexes 0 mean there is
+no letter in the string); for example the row with index 3 means that we are
+considering the substring formed with the first 3 letters of the key
+* the values stored in the table represent the number of occurences (not
+neccessary continous) of a part of the substring in a part of the key, so
+for the first row all values will be 0 (as in an empty key we cannot match any
+substrings) and all values on the first coloumn will be 1 (as an empty substring
+can be found in any key) - however, when we come across a '?' it means we are
+breaking into l branches, so I will change that 1 value into l ^ number_of_? as
+we will find an occurence on each of the branches.
+* further completing the DP table we have the following cases:
+    - last letters of both sequences match => the total number of occurences of
+    this part of the substring in the corresponding part of the key is the number
+    of occurences of the same subtrings without that last matching letter (consider
+    having the strings aabc and bc -> bc occurs one inside the first string; now
+    if we add a 'd' to the end of both of them, the substring bcd will still occur
+    once inside aabcd) + the number of matches we could form with the same substring
+    in the substring of the key that doesn't contain its last letter (in the key
+    aabcc and the substring bc the number of total occurences is 2: firstly count
+    how many times b appears in aabc (once) and secondly how many times bc appears
+    in aabc (once));
+    - the letter in the key is '?' -> this means we are creating l branches, each
+    having a different character in this position => one branch will have a letter
+    match and l - 1 branches will have a mismatch; the final result involves
+    looking in all the branches we had previous to this '?' how many occurences
+    the substring without its last letter had (because of the matching character
+    on one branch) and adding the number of times the current substring matched
+    in the key without the '?' * (number_of_branches - 1) -> because this situation
+    occurs in every new branch that does not have a last matching character
+    - the letters don't match => count how many times the substring matched before
+    in the key
+* the complexities for this problem are both time and space O(N * L) thanks to
+the smart use of DP instead of backtracking each possible key and counting the
+number of occurences
+
+[1] - https://www.geeksforgeeks.org/find-number-times-string-occurs-given-string/

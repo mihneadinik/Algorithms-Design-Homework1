@@ -1,0 +1,11 @@
+Skipping input './out/production/check_public': Can't open for reading
+Skipping input '(1)/prinel.cpp': Can't open for reading
+Skipping input './out/production/check_public': Can't open for reading
+Skipping input '(1)/walsh.cpp': Can't open for reading
+Skipping input './out/production/check_public': Can't open for reading
+Skipping input '(1)/_utils/verif.cpp': Can't open for reading
+Done processing ./prinel.cpp
+Done processing ./walsh.cpp
+Done processing ./crypto.cpp
+Done processing ./_utils/verif.cpp
+Total errors found: 0
